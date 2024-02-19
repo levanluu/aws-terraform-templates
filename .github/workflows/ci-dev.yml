@@ -3,6 +3,9 @@ name: 'CI'
 on:
   pull_request:
     branches: [ "dev" ]
+    paths:
+    - 'phases/example/**'
+    - '.github/workflows/ci-dev.yml'
 
 jobs:
   terraform:
