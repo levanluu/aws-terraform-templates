@@ -21,6 +21,8 @@ cd aws-terraform-templates
 
 ## Initialize
 
+Run this step if you are beginning to set up a new infrastructure
+
 ### Initialize common state storage
 
 - Go to `phases/initializations/terraform_initialization_states_storage`
@@ -52,6 +54,12 @@ cd aws-terraform-templates
   terraform init
   terraform apply
   ```
+
+## Setup pre-commit (optional)
+
+```
+pre-commit install
+```
 
 ## Setup infrastructure for project
 
