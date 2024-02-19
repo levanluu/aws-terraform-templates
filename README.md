@@ -9,32 +9,51 @@
 
 ---
 
-# Terraform Template
+# AWS Terraform Template
 
 ## Usage
 
 Clone the repository
 ```
-git clone https://github.com/digitalfortress-dev/terraform-templates.git
-cd terraform-templates
+git clone https://github.com/digitalfortress-dev/aws-terraform-templates.git
+cd aws-terraform-templates
 ```
-Create and select develop workspace
-```
-terraform workspace new dev
-terraform workspace select dev
-```
-Init
-```
-terraform init
-```
-Review change
-```
-terraform plan
-```
-Apply
-```
-terraform apply
-```
+
+## Initialize
+
+### Initialize common state storage
+
+- Go to `phases/initializations/terraform_initialization_states_storage`
+
+  ```
+  cd phases/initializations/terraform_initialization_states_storage
+  ```
+
+- Setup common state storage
+
+  ```
+  terraform init
+  terraform apply
+  ```
+
+### Initialize AWS account and state storage for each environment
+
+- Go to `phases/initializations/initialize_environments`
+
+  ```
+  cd phases/initializations/initialize_environments
+  ```
+
+- Update environments list in `terraform.tfvars`
+
+- Setup AWS account and state storage for each environment
+
+  ```
+  terraform init
+  terraform apply
+  ```
+
+## Setup infrastructure for project
 
 ## License
 
