@@ -5,7 +5,7 @@ on:
     branches: [ "dev" ]
     paths:
     - 'phases/example/**'
-    - '.github/workflows/ci-dev.yml'
+    - '.github/workflows/ci-dev-example.yml'
 
 jobs:
   terraform:
