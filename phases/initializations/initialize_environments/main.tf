@@ -126,7 +126,10 @@ resource "aws_iam_user_policy" "user_policy" {
          "s3:PutObject",
          "s3:DeleteObject"
        ],
-      "Resource": "arn:aws:s3:::${each.key}-${var.bucket_state_storage_name}"
+      "Resource": [
+        "arn:aws:s3:::${each.key}-${var.bucket_state_storage_name}",
+        "arn:aws:s3:::${each.key}-${var.bucket_state_storage_name}/*"
+      ]
     }
   ]
 }
