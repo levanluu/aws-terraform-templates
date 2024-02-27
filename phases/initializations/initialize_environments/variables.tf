@@ -13,12 +13,6 @@ variable "environments" {
   }))
 }
 
-variable "team_email" {
-  description = "The email of team."
-  default     = ""
-  type        = string
-}
-
 # S3 BUCKET
 variable "bucket_state_storage_name" {
   description = "The name of S3 bucket to store state files."

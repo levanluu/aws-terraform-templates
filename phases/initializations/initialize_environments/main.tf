@@ -5,10 +5,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.29"
     }
-    pgp = {
-      source  = "ekristen/pgp"
-      version = "0.2.4"
-    }
   }
 }
 
@@ -37,55 +33,6 @@ resource "aws_iam_user" "user" {
 
   name          = "${var.project_name}-${each.key}"
   force_destroy = false
-}
-
-resource "aws_iam_access_key" "user_access_key" {
-  for_each = { for environment in var.environments : environment.name => environment }
-
-  user       = "${var.project_name}-${each.key}"
-  depends_on = [aws_iam_user.user]
-}
-
-resource "pgp_key" "user_login_key" {
-  for_each = { for environment in var.environments : environment.name => environment }
-
-  name    = "${var.project_name}-${each.key}"
-  email   = var.team_email
-  comment = "PGP Key for ${var.project_name}-${each.key}"
-}
-
-resource "aws_iam_user_login_profile" "user_login" {
-  for_each = { for environment in var.environments : environment.name => environment }
-
-  user                    = "${var.project_name}-${each.key}"
-  pgp_key                 = pgp_key.user_login_key[each.key].public_key_base64
-  password_reset_required = true
-
-  depends_on = [aws_iam_user.user, pgp_key.user_login_key]
-
-  lifecycle {
-    ignore_changes = [password_reset_required]
-  }
-}
-
-data "pgp_decrypt" "user_password_decrypt" {
-  for_each = { for environment in var.environments : environment.name => environment }
-
-  ciphertext          = aws_iam_user_login_profile.user_login[each.key].encrypted_password
-  ciphertext_encoding = "base64"
-  private_key         = pgp_key.user_login_key[each.key].private_key
-}
-
-output "credentials" {
-  value = {
-    for k, v in { for environment in var.environments : environment.name => environment } : k => {
-      "key"      = aws_iam_access_key.user_access_key[k].id
-      "secret"   = aws_iam_access_key.user_access_key[k].secret
-      "username" = "${var.project_name}-${k}"
-      "password" = data.pgp_decrypt.user_password_decrypt[k].plaintext
-    }
-  }
-  sensitive = true
 }
 
 # Attach policy
