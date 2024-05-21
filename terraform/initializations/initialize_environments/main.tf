@@ -25,10 +25,10 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-moonlab"
+    bucket         = "terraform-state-example"
     key            = "terraform/initializations/initialize_environments/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "terraform-dynamodb-moonlab"
+    dynamodb_table = "terraform-dynamodb-example"
     encrypt        = true
   }
 }

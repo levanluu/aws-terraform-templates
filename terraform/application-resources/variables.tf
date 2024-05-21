@@ -21,13 +21,11 @@ variable "cidr_block" {
 
 variable "public_subnet_cidr_block" {
   description = "Public Subnet CIDR Block."
-  default     = []
   type        = list(any)
 }
 
 variable "rds_security_group_cidr_blocks" {
   description = "Public Subnet CIDR Block."
-  default     = []
   type        = list(any)
 }
 
