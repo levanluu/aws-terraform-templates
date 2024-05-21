@@ -9,59 +9,119 @@
 
 ---
 
-# AWS Terraform Template
+# Terraform Template
 
 ## Usage
 
 Clone the repository
-```
-git clone https://github.com/digitalfortress-dev/aws-terraform-templates.git
-cd aws-terraform-templates
-```
-
-## Initialize
-
-Run this step if you are beginning to set up a new infrastructure
-
-### Initialize common state storage
-
-- Go to `phases/initializations/terraform_initialization_states_storage`
-
-  ```
-  cd phases/initializations/terraform_initialization_states_storage
-  ```
-
-- Setup common state storage
-
-  ```
-  terraform init
-  terraform apply
-  ```
-
-### Initialize AWS account and state storage for each environment
-
-- Go to `phases/initializations/initialize_environments`
-
-  ```
-  cd phases/initializations/initialize_environments
-  ```
-
-- Update environments list in `terraform.tfvars`
-
-- Setup AWS account and state storage for each environment
-
-  ```
-  terraform init
-  terraform apply
-  ```
-
-## Setup pre-commit (optional)
 
 ```
-pre-commit install
+git clone https://github.com/digitalfortress-dev/terraform-templates.git
+cd terraform-templates
 ```
 
-## Setup infrastructure for project
+## initialize project
+
+Select develop workspace
+
+```
+terraform workspace select dev
+```
+
+Create Backend state
+
+```
+cd terraform/functionality/terraform_initialization_states_storage
+```
+
+```
+terraform init
+```
+
+```
+terraform plan
+```
+
+```
+terraform apply
+```
+
+Set up environment
+
+```
+cd terraform/functionality/initialize_environments
+```
+
+```
+terraform init
+```
+
+```
+terraform plan
+```
+
+```
+terraform apply
+```
+
+## Build infrastructure
+
+Init
+
+```
+terraform init
+```
+
+Review change
+
+```
+terraform plan --var-file="dev.tfvars"
+```
+
+Apply
+
+```
+terraform apply --var-file="dev.tfvars"
+```
+
+## Project tree
+
+```
+aws-terraform-templates
+├─ .github
+│  └─ workflows
+│     ├─ cd-dev-example.yml
+│     └─ ci-dev-example.yml
+├─ .gitignore
+├─ .pre-commit-config.yaml
+├─ LICENSE
+├─ README.md
+└─ terraform
+   ├─ application-resources
+   ├─ functionality
+   │  ├─ example
+   ├─ initializations
+   │  ├─ initialize_environments
+   │  │  ├─ lambda
+   │  │  │  └─ monitoring-billing
+   │  └─ terraform_initialization_states_storage
+   ├─ modules
+   │  ├─ acm_certificate
+   │  ├─ ecr
+   │  ├─ iam_role
+   │  ├─ iot-core
+   │  │  └─ fleet-provisioning
+   │  ├─ load_balancers
+   │  ├─ rds
+   │  ├─ security_group
+   │  ├─ sqs
+   │  └─ vpc-subnet-internet_gateway
+   ├─ main.tf
+   ├─ dev.tfvars
+   ├─ prod.tfvars
+   ├─ state.tf
+   └─ variables.tf
+```
 
 ## License
 
@@ -70,6 +130,7 @@ This project is Copyright (c) 2023 and onwards Digital Fortress. It is free soft
 [LICENSE]: /LICENSE
 
 ## About
+
 <a href="https://www.digitalfortress.dev/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://okela-bucket-s3.s3.ap-southeast-1.amazonaws.com/logo/Digital+Fortress+-+Logo.png">
